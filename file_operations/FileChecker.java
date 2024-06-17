@@ -65,7 +65,6 @@ public class FileChecker {
       while(scan.hasNextLine()) {
         String currentLine = scan.nextLine();
         String[] currentDataFrame = currentLine.split(",");
-        //NOTE: Think about this, if we get the log of the length of the currentDataFrame then we can get the number of rows it has
         int numRows = currentDataFrame.length;
         currentMatrix = new int[numRows][numRows];
         for(int i = 0; i < numRows; ++i) {
