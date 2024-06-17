@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Project_1 {
   
@@ -21,6 +22,7 @@ public class Project_1 {
     readDataUsingMatricies(3, file);
   }
 
+  //TODO: Make it so that it generates 2 datasets for two matricies
   //NOTE: Check if dataset exists:
   public static void findDataSet(File file) throws IOException {
     //Check if file in current directory exists
@@ -76,21 +78,18 @@ public class Project_1 {
         //printMatrix(currentMatrix, numRows);
         //System.out.println("\n");
         //NOTE: This is where we record the time of the algorithm
-        //TODO: Find the Average of this:
-        for(int i = 0; i < 10; i++){
-
-        }
-        timeClassicMatrixMult(numRows, currentMatrix);
+        //NOTE: This funciton can take in a trials argument to be more flexible
+        // if i want more tirals in the future
+        System.out.println("Average: " + timeClassicMatrixMult(numRows, currentMatrix, 10));
         //TODO: Build: timeRecursiveMatrixMult() and timeStrassenAlgorithm()
       }
     }
   }
 
-  //TODO: This needs to record the findings into a separate file
-  //TODO: This also needs to get the average first before printing to the separate file
-  public static void timeClassicMatrixMult(int rows, int[][] currentMatrix) {
-    //NOTE: I'm choosing 10 trials for this analysis
-    double trials = new double[10];
+  //TODO: This needs to record the findings into a separate file as well
+  //NOTE: This returns the average of a set of number of trials (choosing 10 for this analysis) 
+  public static double timeClassicMatrixMult(int rows, int[][] currentMatrix, int numTrials) {
+    double[] trials = new double[numTrials];
     int m = trials.length;
 
     for(int i = 0; i < m; ++i) {
@@ -100,15 +99,17 @@ public class Project_1 {
       long elapsedTime = endTime - startTime;
 
       //NOTE: this line is for debugging purposes
-      System.out.println("Elased time in seconds: " + elapsedTime / 1_000_000_000.0 + "\n");
+      //System.out.println("Elased time in seconds: " + elapsedTime / 1_000_000_000.0 + "\n");
 
-      //NOTE: Store current time
-      trials[i] = elapsedTime;
+      //NOTE: Store current time, its converted to seconds
+      trials[i] = elapsedTime / 1_000_000_000.0;
     }
     //TODO: Find the average here using trials array
-
+    printMatrix(currentMatrix, rows); //NOTE: This is for debugging
+    return findAverageTime(trials);
   }
 
+  //TODO: This needs a third argument that takes in a second matrix
   public static void classicMatrixMult(int size,  int array1[][]) {
     int [][] array3 = new int[size][size];
 
@@ -120,13 +121,19 @@ public class Project_1 {
       }
     }
    //TODO: This is just a debug funciton, delete when project is finished
-   printMatrix(array3, size); 
+   //printMatrix(array3, size); 
 
   }
 
-  //TODO: This needs to be tested 
+  //TODO:  I tested this a couple of times already, it seems to work. Review it one more time later
   public static double findAverageTime(double[] trials) {
-    Arrays.sort(tirals);
+    Arrays.sort(trials);
+    double sum = 0.0;
+    int N = trials.length;
+    for(int i = 1; i < N - 1; ++i) {
+      sum += trials[i];
+    }
+    return sum / (N - 2);
   }
 
 
@@ -143,6 +150,7 @@ public class Project_1 {
   }
 
   //NOTE: This is a test function for getting the sum of this matrix:
+  //TODO: Delete when project is finished
   public static void printSum(int[][] matrix, int size) {
     int sum = 0;
     for(int i = 0; i < size; i++) {
